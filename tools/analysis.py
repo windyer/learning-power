@@ -306,7 +306,7 @@ class Analysis_Project_Answer(object):
             if not code['data_str']['list']:
                 continue
             for topics in code['data_str']['list']:
-                if not topics['overdue']:
+                if not topics['overdue'] and topics['achievement']['correct'] != user_msg.USER_PROJECT_ANSWER_TASKS:
                     self.__topic_list.append(topics)
             if self.__topic_list:
                 break

@@ -160,6 +160,9 @@ class Answer(object):
     #     self.__init_submit()
 
     def __do_choosable(self, answer: Dict):
+
+
+
         self.__init_choosable()
         if self.__type in [1, 2]:
             for correct in answer['correct']:
@@ -172,11 +175,25 @@ class Answer(object):
             )
             for index, desc in enumerate(descs):
                 descs[index] = desc[desc.find('>')+1: desc.rfind('<')]
-            for correct in answer['answers']:
-                for desc in descs:
-                    if correct['content'] == desc:
-                        self.__answer_choosables[correct['label']].click()
-                        time.sleep(0.1)
+
+            t_answers = [correct['content'] for correct in answer['answers']]
+            if len(t_answers) > 0:
+                is_tstm = t_answers[0] == '正确'
+                if is_tstm:
+                    label = 'A' if descs[0] in self.__answer_topic_desc else 'B'
+                    self.__answer_choosables[label].click()
+                    time.sleep(0.1)
+                else:
+                    for correct in answer['answers']:
+                        for desc in descs:
+                            if correct['content'] == desc:
+                                self.__answer_choosables[correct['label']].click()
+                                time.sleep(0.1)
+            # for correct in answer['answers']:
+            #     for desc in descs:
+            #         if correct['content'] == desc:
+            #             self.__answer_choosables[correct['label']].click()
+            #             time.sleep(0.1)
 
     def __do_input(self, answer: Dict):
         self.__init_input()
